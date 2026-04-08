@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #050816;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleep Calculator - Find Your Optimal Sleep Cycles</title>
+  <meta name="description" content="Calculate optimal bedtimes and wake times based on 90-minute sleep cycles.">
+  <meta name="theme-color" content="#050816">
+  
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V4MRZL3F6K"></script>
+</head>
+<body class="bg-bg font-sans antialiased min-h-screen flex flex-col" style="opacity: 0; background-color: #050816; color: #f8fafc;">
+
+  <!-- Header -->
+  <header class="border-b border-white/5 bg-white/5 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-md mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg class="w-6 h-6 text-indigo-500 animate-pulse" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <span id="title-text" class="font-bold text-sm tracking-tight text-slate-100">Sleep Calculator</span>
+      </div>
+      
+      <!-- Custom Language Dropdown -->
+      <div id="lang-dropdown" class="relative">
+        <button id="lang-trigger" class="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
+          <span id="lang-label" class="text-[10px] font-black text-slate-400 uppercase tracking-widest pointer-events-none">Language</span>
+          <svg id="lang-chevron" class="w-3 h-3 text-slate-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+        
+        <div id="lang-menu" class="hidden absolute right-0 mt-2 w-40 bg-[#0D122D]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-[100] py-2 overflow-hidden">
+          <button data-lang-opt="en" class="w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-bold text-slate-200 hover:bg-white/5 transition-colors">
+            <span>English</span>
+            <svg data-lang-check="en" class="w-3 h-3 text-indigo-400 opacity-0 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+          <button data-lang-opt="zh" class="w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-bold text-slate-200 hover:bg-white/5 transition-colors">
+            <span>简体中文</span>
+            <svg data-lang-check="zh" class="w-3 h-3 text-indigo-400 opacity-0 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="flex-grow flex flex-col items-center justify-center p-6">
+    <div class="main-card h-[520px]">
+      <div id="view-stack" class="view-stack">
+        
+        <!-- INPUT VIEW -->
+        <div id="input-view" class="view-visible flex flex-col h-full justify-between">
+          <div class="flex flex-col items-center">
+            <label id="wake-label" for="wakeHour" class="text-xl font-black text-slate-100 uppercase tracking-widest text-center mt-4 mb-12">When to wake up?</label>
+            <div class="flex gap-4 justify-center w-full px-4">
+              <div class="flex-1 select-container">
+                <select id="wakeHour" aria-label="Wake up hour"></select>
+              </div>
+              <span class="text-slate-500 self-center font-bold text-2xl">:</span>
+              <div class="flex-1 select-container">
+                <select id="wakeMinute" aria-label="Wake up minute">
+                  <option value="0">00</option><option value="5">05</option><option value="10">10</option><option value="15">15</option>
+                  <option value="20">20</option><option value="25">25</option><option value="30">30</option><option value="35">35</option>
+                  <option value="40">40</option><option value="45">45</option><option value="50">50</option><option value="55">55</option>
+                </select>
+              </div>
+              <div class="flex-1 select-container">
+                <select id="wakePeriod" aria-label="AM or PM">
+                  <option>AM</option><option>PM</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8 pb-4">
+            <button type="submit" id="calculateBtn" class="w-full h-14 bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl shadow-[0_0_30px_rgba(99,102,241,0.2)] hover:shadow-[0_0_40px_rgba(99,102,241,0.4)] active:scale-[0.98] transition-all whitespace-nowrap">
+              Calculate Bedtime
+            </button>
+            <div class="flex flex-col gap-8">
+              <div class="flex items-center gap-4">
+                <div class="flex-1 h-px bg-white/5"></div>
+                <span id="or-text" class="text-[10px] font-black text-slate-500 uppercase tracking-widest">or</span>
+                <div class="flex-1 h-px bg-white/5"></div>
+              </div>
+              <button id="nowSleepBtn" class="w-full h-14 bg-white/5 hover:bg-white/10 text-indigo-400 text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl border border-white/10 active:scale-[0.98] transition-all whitespace-nowrap">
+                <span id="nowSleepBtn-text">Going to bed now</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESULTS VIEW -->
+        <div id="result-view" class="view-hidden flex flex-col h-full justify-between">
+          <div>
+            <div id="resultTitle" class="text-center font-black text-xl text-slate-100 uppercase tracking-widest pt-4 pb-10"></div>
+            <div id="resultList" class="space-y-2 scroll-results pr-1"></div>
+          </div>
+          <div class="pb-4">
+            <button id="backBtn" class="w-full h-14 bg-white/5 hover:bg-white/10 text-slate-100 text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl border border-white/10 active:scale-[0.98] transition-all">
+              ← Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Science Info -->
+    <div class="mt-8 px-6 text-center max-w-xs mx-auto">
+      <div class="text-[10px] text-slate-500 opacity-60 leading-relaxed uppercase tracking-wider">
+        <span id="science-label" class="font-black mr-1">Science:</span>
+        <span id="science-text">Optimal rest is 5-6 cycles.</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Final Footer -->
+  <footer class="py-4 mt-auto flex justify-center items-center">
+    <a href="https://www.nopress.net" target="_blank" id="footer-link" class="text-slate-500 hover:text-indigo-400 text-[11px] tracking-[0.2em] transition-colors uppercase">
+      © NoPress
+    </a>
+  </footer>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #050816;
+    --surface: rgba(255, 255, 255, 0.05);
+    --border: rgba(255, 255, 255, 0.1);
+    --accent: #6366F1;
+    --fg: #F1F5F9;
+    --muted: #94A3B8;
+  }
+}
+
+body {
+  background: radial-gradient(circle at center, #0D122D 0%, #050816 100%);
+  color: var(--fg);
+  min-height: 100vh;
+  opacity: 0;
+}
+
+body.ready {
+  opacity: 1 !important;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.main-card {
+  width: 100%;
+  max-width: 28rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border);
+  border-radius: 2rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.view-stack {
+  display: grid;
+  flex-grow: 1;
+}
+
+.view-stack > div {
+  grid-area: 1 / 1;
+  width: 100%;
+  padding: 2.5rem 2rem 1.5rem 2rem;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.view-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.98);
+}
+
+.view-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.select-container {
+  position: relative;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  text-align: center;
+  text-align-last: center;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  width: 100%;
+  height: 64px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 0 1rem;
+  font-size: 1.25rem;
+  color: var(--fg);
+  transition: all 0.2s ease;
+  font-weight: 700;
+}
+
+select:focus {
+  border-color: var(--accent);
+  background-color: rgba(255, 255, 255, 0.06);
+  outline: none;
+}
+
+select option {
+  background-color: #0d122d;
+  color: #F1F5F9;
+}
+
+.scroll-results {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.scroll-results::-webkit-scrollbar {
+  width: 3px;
+}
+
+.scroll-results::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-results::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.glass-bubble {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.glass-bubble:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent);
+}
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeInDown 0.4s ease-out forwards;
+}
+
+@keyframes fadeInDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
