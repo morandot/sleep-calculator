@@ -103,4 +103,4 @@ The template ships with Google Analytics (`gtag`). To use your own measurement I
 
 ## License
 
-Released under the [MIT License](https://opensource.org/licenses/MIT).
+[MIT License](https://opensource.org/licenses/MIT).

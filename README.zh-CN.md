@@ -102,4 +102,4 @@ sleep-calculator/
 
 ## 许可证
 
-采用 [MIT 许可证](https://opensource.org/licenses/MIT) 发布。
+[MIT 许可证](https://opensource.org/licenses/MIT) 发布。
