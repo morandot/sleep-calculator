@@ -1,24 +1,24 @@
 import './style.css';
 import { updateDOMStrings } from './i18n';
-import { initUI } from './ui';
+import { initTheme } from './state';
+import { initApp } from './app';
 
+// Apply theme before first paint to prevent flash
+initTheme();
 updateDOMStrings();
 
-document.addEventListener('DOMContentLoaded', () => {
-  initUI();
-  setTimeout(() => {
+function start(): void {
+  initApp();
+  // Small delay to ensure CSS transitions apply after initial render
+  requestAnimationFrame(() => {
     document.body.classList.add('ready');
-    document.body.style.opacity = '1';
-  }, 50);
-});
-
-// @ts-ignore
-window.dataLayer = window.dataLayer || [];
-function gtag(){
-  // @ts-ignore
-  dataLayer.push(arguments);
+  });
 }
-// @ts-ignore
-gtag('js', new Date());
-// @ts-ignore
-gtag('config', 'G-V4MRZL3F6K');
+
+// DOMContentLoaded may have already fired by the time this module loads,
+// because <script type="module"> is deferred by spec.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', start);
+} else {
+  start();
+}

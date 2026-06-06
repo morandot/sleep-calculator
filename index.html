@@ -1,135 +1,191 @@
 <!DOCTYPE html>
-<html lang="en" style="background-color: #050816;">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sleep Calculator - Find Your Optimal Sleep Cycles</title>
   <meta name="description" content="Calculate optimal bedtimes and wake times based on 90-minute sleep cycles.">
-  <meta name="theme-color" content="#050816">
-  
+  <meta name="theme-color" content="#6C5CE7">
+
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="apple-touch-icon" href="/favicon.svg">
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V4MRZL3F6K"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600&display=swap" rel="stylesheet">
 </head>
-<body class="bg-bg font-sans antialiased min-h-screen flex flex-col" style="opacity: 0; background-color: #050816; color: #f8fafc;">
+<body class="font-sans antialiased min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="border-b border-white/5 bg-white/5 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-md mx-auto px-6 py-4 flex items-center justify-between">
+  <header class="header-bar">
+    <div class="max-w-lg mx-auto px-5 py-3 flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <svg class="w-6 h-6 text-indigo-500 animate-pulse" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <!-- Moon icon -->
+        <svg class="w-5 h-5" style="color: var(--color-primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
-        <span id="title-text" class="font-bold text-sm tracking-tight text-slate-100">Sleep Calculator</span>
+        <span data-i18n="title" class="text-sm font-semibold" style="color: var(--color-fg)">Sleep Calculator</span>
       </div>
-      
-      <!-- Custom Language Dropdown -->
-      <div id="lang-dropdown" class="relative">
-        <button id="lang-trigger" class="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
-          <span id="lang-label" class="text-[10px] font-black text-slate-400 uppercase tracking-widest pointer-events-none">Language</span>
-          <svg id="lang-chevron" class="w-3 h-3 text-slate-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+
+      <div class="flex items-center gap-2">
+        <!-- Theme toggle -->
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <!-- Sun icon (shown in dark mode) -->
+          <svg id="sun-icon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Moon icon (shown in light mode) -->
+          <svg id="moon-icon" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
-        
-        <div id="lang-menu" class="hidden absolute right-0 mt-2 w-40 bg-[#0D122D]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-[100] py-2 overflow-hidden">
-          <button data-lang-opt="en" class="w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-bold text-slate-200 hover:bg-white/5 transition-colors">
-            <span>English</span>
-            <svg data-lang-check="en" class="w-3 h-3 text-indigo-400 opacity-0 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+
+        <!-- Language dropdown -->
+        <div class="relative">
+          <button id="lang-trigger" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors"
+                  style="background-color: var(--color-bg-subtle); border: 1px solid var(--color-border)">
+            <span class="text-xs font-medium uppercase tracking-wider" style="color: var(--color-fg-muted)" data-i18n="langLabel">EN</span>
+            <svg id="lang-chevron" class="w-3 h-3 transition-transform duration-200" style="color: var(--color-fg-muted)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </button>
-          <button data-lang-opt="zh" class="w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-bold text-slate-200 hover:bg-white/5 transition-colors">
-            <span>简体中文</span>
-            <svg data-lang-check="zh" class="w-3 h-3 text-indigo-400 opacity-0 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-          </button>
+
+          <div id="lang-menu" class="hidden lang-menu absolute right-0 mt-1.5 w-40 py-1.5 z-[100]">
+            <button data-lang="en" class="lang-menu-item w-full flex items-center justify-between px-4 py-2 text-sm font-medium" style="color: var(--color-fg)">
+              <span>English</span>
+              <svg data-lang-check="en" class="w-3.5 h-3.5 opacity-0 transition-opacity" style="color: var(--color-primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <button data-lang="zh" class="lang-menu-item w-full flex items-center justify-between px-4 py-2 text-sm font-medium" style="color: var(--color-fg)">
+              <span>简体中文</span>
+              <svg data-lang-check="zh" class="w-3.5 h-3.5 opacity-0 transition-opacity" style="color: var(--color-primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <button data-lang="zh-TW" class="lang-menu-item w-full flex items-center justify-between px-4 py-2 text-sm font-medium" style="color: var(--color-fg)">
+              <span>繁體中文</span>
+              <svg data-lang-check="zh-TW" class="w-3.5 h-3.5 opacity-0 transition-opacity" style="color: var(--color-primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <button data-lang="ja" class="lang-menu-item w-full flex items-center justify-between px-4 py-2 text-sm font-medium" style="color: var(--color-fg)">
+              <span>日本語</span>
+              <svg data-lang-check="ja" class="w-3.5 h-3.5 opacity-0 transition-opacity" style="color: var(--color-primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <button data-lang="ko" class="lang-menu-item w-full flex items-center justify-between px-4 py-2 text-sm font-medium" style="color: var(--color-fg)">
+              <span>한국어</span>
+              <svg data-lang-check="ko" class="w-3.5 h-3.5 opacity-0 transition-opacity" style="color: var(--color-primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+            <button data-lang="es" class="lang-menu-item w-full flex items-center justify-between px-4 py-2 text-sm font-medium" style="color: var(--color-fg)">
+              <span>Español</span>
+              <svg data-lang-check="es" class="w-3.5 h-3.5 opacity-0 transition-opacity" style="color: var(--color-primary)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Main Content Area -->
-  <main class="flex-grow flex flex-col items-center justify-center p-6">
-    <div class="main-card h-[520px]">
-      <div id="view-stack" class="view-stack">
-        
-        <!-- INPUT VIEW -->
+  <!-- Main Content -->
+  <main class="flex-grow flex flex-col items-center justify-center px-5 py-8">
+    <!-- Hero text (hidden on small screens to save space) -->
+    <div class="text-center mb-8 max-w-md hidden md:block">
+      <h1 class="font-headline text-4xl font-semibold leading-tight mb-3" style="color: var(--color-fg)" data-i18n="title">Sleep Calculator</h1>
+      <p class="text-base leading-relaxed" style="color: var(--color-fg-muted)" data-i18n="subtitle">Wake up refreshed by aligning with your natural sleep cycles</p>
+    </div>
+
+    <div class="main-card">
+      <div class="view-stack" style="min-height: 440px">
+        <!-- Input View -->
         <div id="input-view" class="view-visible flex flex-col h-full justify-between">
           <div class="flex flex-col items-center">
-            <label id="wake-label" for="wakeHour" class="text-xl font-black text-slate-100 uppercase tracking-widest text-center mt-4 mb-12">When to wake up?</label>
-            <div class="flex gap-4 justify-center w-full px-4">
-              <div class="flex-1 select-container">
-                <select id="wakeHour" aria-label="Wake up hour"></select>
+            <!-- Mobile-only title -->
+            <h1 class="font-headline text-2xl font-semibold leading-tight mb-1 md:hidden" style="color: var(--color-fg)" data-i18n="title">Sleep Calculator</h1>
+
+            <label class="text-base font-medium mt-6 mb-8 text-center" style="color: var(--color-fg-muted)" data-i18n="whenToWake" for="wakeHour">
+              When do you want to wake up?
+            </label>
+
+            <div class="flex gap-3 justify-center w-full px-2">
+              <div class="flex-1">
+                <select id="wakeHour" class="sleep-select" aria-label="Wake up hour"></select>
               </div>
-              <span class="text-slate-500 self-center font-bold text-2xl">:</span>
-              <div class="flex-1 select-container">
-                <select id="wakeMinute" aria-label="Wake up minute">
+              <span class="self-center text-xl font-semibold" style="color: var(--color-fg-muted)">:</span>
+              <div class="flex-1">
+                <select id="wakeMinute" class="sleep-select" aria-label="Wake up minute">
                   <option value="0">00</option><option value="5">05</option><option value="10">10</option><option value="15">15</option>
                   <option value="20">20</option><option value="25">25</option><option value="30">30</option><option value="35">35</option>
                   <option value="40">40</option><option value="45">45</option><option value="50">50</option><option value="55">55</option>
                 </select>
               </div>
-              <div class="flex-1 select-container">
-                <select id="wakePeriod" aria-label="AM or PM">
+              <div class="flex-1">
+                <select id="wakePeriod" class="sleep-select" aria-label="AM or PM">
                   <option>AM</option><option>PM</option>
                 </select>
               </div>
             </div>
           </div>
 
-          <div class="flex flex-col gap-8 pb-4">
-            <button type="submit" id="calculateBtn" class="w-full h-14 bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl shadow-[0_0_30px_rgba(99,102,241,0.2)] hover:shadow-[0_0_40px_rgba(99,102,241,0.4)] active:scale-[0.98] transition-all whitespace-nowrap">
+          <div class="flex flex-col gap-4 pb-2 mt-8">
+            <button type="submit" id="calculateBtn" class="btn-primary" data-i18n="calculateBtn">
               Calculate Bedtime
             </button>
-            <div class="flex flex-col gap-8">
-              <div class="flex items-center gap-4">
-                <div class="flex-1 h-px bg-white/5"></div>
-                <span id="or-text" class="text-[10px] font-black text-slate-500 uppercase tracking-widest">or</span>
-                <div class="flex-1 h-px bg-white/5"></div>
-              </div>
-              <button id="nowSleepBtn" class="w-full h-14 bg-white/5 hover:bg-white/10 text-indigo-400 text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl border border-white/10 active:scale-[0.98] transition-all whitespace-nowrap">
-                <span id="nowSleepBtn-text">Going to bed now</span>
-              </button>
+
+            <div class="flex items-center gap-3 my-1">
+              <div class="flex-1 divider"></div>
+              <span class="text-xs font-medium uppercase tracking-wider" style="color: var(--color-fg-muted)" data-i18n="or">or</span>
+              <div class="flex-1 divider"></div>
             </div>
+
+            <button id="nowSleepBtn" class="btn-secondary" data-i18n="goingToBedNow">
+              Going to Bed Now
+            </button>
           </div>
         </div>
 
-        <!-- RESULTS VIEW -->
+        <!-- Result View -->
         <div id="result-view" class="view-hidden flex flex-col h-full justify-between">
           <div>
-            <div id="resultTitle" class="text-center font-black text-xl text-slate-100 uppercase tracking-widest pt-4 pb-10"></div>
-            <div id="resultList" class="space-y-2 scroll-results pr-1"></div>
+            <div id="resultTitle" class="text-center font-headline text-xl font-semibold pt-2 pb-6" style="color: var(--color-fg)"></div>
+            <div id="resultList" class="space-y-2.5 scroll-results pr-1"></div>
           </div>
-          <div class="pb-4">
-            <button id="backBtn" class="w-full h-14 bg-white/5 hover:bg-white/10 text-slate-100 text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl border border-white/10 active:scale-[0.98] transition-all">
-              ← Back
-            </button>
+          <div class="pt-4 pb-2">
+            <button id="backBtn" class="btn-secondary" data-i18n="backBtn">Back</button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Science Info -->
-    <div class="mt-8 px-6 text-center max-w-xs mx-auto">
-      <div class="text-[10px] text-slate-500 opacity-60 leading-relaxed uppercase tracking-wider">
-        <span id="science-label" class="font-black mr-1">Science:</span>
-        <span id="science-text">Optimal rest is 5-6 cycles.</span>
-      </div>
+    <div class="mt-8 px-4 text-center max-w-sm mx-auto">
+      <p class="text-xs leading-relaxed" style="color: var(--color-fg-muted)">
+        <span class="font-semibold" data-i18n="scienceLabel">Science</span>:
+        <span data-i18n="scienceText">Each sleep cycle lasts about 90 minutes. Waking at the end of a cycle helps you feel more refreshed. Most adults need 5-6 cycles (7.5-9 hours).</span>
+      </p>
     </div>
   </main>
 
-  <!-- Final Footer -->
+  <!-- Footer -->
   <footer class="py-4 mt-auto flex justify-center items-center">
-    <a href="https://www.nopress.net" target="_blank" id="footer-link" class="text-slate-500 hover:text-indigo-400 text-[11px] tracking-[0.2em] transition-colors uppercase">
-      © NoPress
-    </a>
+    <a href="https://www.nopress.net" target="_blank" rel="noopener noreferrer"
+       class="footer-link text-xs tracking-wider uppercase"
+       style="color: var(--color-fg-muted)"
+       data-i18n="footer">NoPress</a>
   </footer>
 
   <script type="module" src="/src/main.ts"></script>

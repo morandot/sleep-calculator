@@ -2,7 +2,9 @@
 
 English | [中文](./README.zh-CN.md)
 
-A minimalist, science-based sleep cycle calculator with a deep starry sky aesthetic. It helps you find a better time to wake up or go to bed by aligning with natural ~90-minute sleep cycles.
+A science-based sleep cycle calculator that suggests optimal bedtimes and wake times
+by aligning with natural ~90-minute sleep cycles. Features a warm, distraction-free
+interface designed for nighttime use.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Framework: Vite 5](https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite)](https://vitejs.dev/)
@@ -17,19 +19,20 @@ A minimalist, science-based sleep cycle calculator with a deep starry sky aesthe
 ## Features
 
 - **Sleep science**: Suggests times based on ~90-minute cycles (typically 3 to 6 cycles).
-- **Glassmorphism UI**: “Deep starry sky” look with semi-transparent surfaces and indigo accents.
-- **Zero-FOUC load**: Inline base styles and a short “ready” phase to reduce white flashes on first paint.
-- **Custom i18n**: Switch between **English** and **简体中文** with an animated dropdown—no full page reload.
-- **PWA**: Installable on mobile and desktop; offline support via `vite-plugin-pwa` and Workbox.
-- **Stable layout**: Input and result views use CSS Grid stacking to avoid jumpy transitions.
+- **Dark / Light theme**: Warm-toned design system with automatic OS preference detection.
+- **Responsive**: Mobile-first layout that works on phones, tablets, and desktops.
+- **i18n**: English and 简体中文 with instant switching — no page reload.
+- **PWA**: Installable on mobile and desktop; offline support via Workbox.
+- **Accessible**: Proper ARIA labels, keyboard navigation, semantic HTML.
+- **Zero dependencies runtime**: Pure TypeScript with no framework — fast and lightweight.
 
 ## Tech stack
 
 - **Core**: [Vite 5](https://vitejs.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS 3](https://tailwindcss.com/) (with PostCSS)
+- **Styling**: [Tailwind CSS 3](https://tailwindcss.com/) with CSS custom properties for theming
 - **PWA**: [Workbox](https://developer.chrome.com/docs/workbox/) via [`vite-plugin-pwa`](https://vite-pwa-org.netlify.app/)
-- **Typography**: Inter (Google Fonts)
-- **Icons**: Inline SVGs in markup
+- **Testing**: [Vitest](https://vitest.dev/)
+- **Typography**: Georgia (headlines), system sans-serif (body)
 
 ## Getting started
 
@@ -40,66 +43,74 @@ A minimalist, science-based sleep cycle calculator with a deep starry sky aesthe
 
 ### Commands
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/sleep-calculator.git
-   cd sleep-calculator
-   ```
+```bash
+# Clone
+git clone https://github.com/your-username/sleep-calculator.git
+cd sleep-calculator
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+# Install
+npm install
 
-3. **Development server**
-   ```bash
-   npm run dev
-   ```
+# Development
+npm run dev
 
-4. **Production build**
-   ```bash
-   npm run build
-   ```
+# Run tests
+npm test
 
-5. **Preview the production build locally**
-   ```bash
-   npm run preview
-   ```
+# Production build
+npm run build
+
+# Preview production build
+npm run preview
+```
 
 ## Project structure
 
 ```text
 sleep-calculator/
 ├── src/
-│   ├── main.ts       # Entry, gtag bootstrap, hydration
-│   ├── ui.ts         # DOM & language dropdown
-│   ├── sleep.ts      # Cycle math
-│   ├── i18n.ts       # Copy & language state
-│   └── style.css     # Tailwind & theme
+│   ├── main.ts        # Entry point: theme init, i18n bootstrap
+│   ├── app.ts         # UI orchestration: events, rendering, view switching
+│   ├── sleep.ts       # Pure sleep cycle math functions
+│   ├── i18n.ts        # Translation strings and language management
+│   ├── state.ts       # Simple reactive state (view, theme, language)
+│   ├── types.ts       # Shared TypeScript types
+│   ├── style.css      # Tailwind directives + theme variables + component styles
+│   └── __tests__/
+│       ├── sleep.test.ts   # Sleep calculation tests
+│       └── i18n.test.ts    # Internationalization tests
 ├── public/
-│   ├── icons/        # PWA icons
-│   ├── offline.html
+│   ├── icons/         # PWA icons
+│   ├── offline.html   # Offline fallback page
 │   └── favicon.svg
-├── index.html        # Vite entry & anti-flash markup
-├── tailwind.config.js
+├── index.html         # Vite entry with semantic markup and data-i18n attributes
+├── CLAUDE.md          # Project conventions and architecture decisions
+├── tailwind.config.js # Design tokens from design system
 ├── postcss.config.js
-└── vite.config.ts    # PWA & build
+└── vite.config.ts     # Vite + PWA + Vitest configuration
 ```
 
 ## Sleep logic
 
-Each cycle is about **90 minutes**. The app suggests waking at the end of a cycle. Common targets:
-
-- **6 cycles**: ~9 hours  
-- **5 cycles**: ~7.5 hours  
-- **4 cycles**: ~6 hours  
-- **3 cycles**: ~4.5 hours  
-
+Each cycle is about **90 minutes**. The app suggests waking at the end of a cycle.
 An extra **~15 minutes** is included as a typical time to fall asleep.
 
-## Analytics
+- **6 cycles**: ~9 hours
+- **5 cycles**: ~7.5 hours
+- **4 cycles**: ~6 hours
+- **3 cycles**: ~4.5 hours
 
-The template ships with Google Analytics (`gtag`). To use your own measurement ID, replace `G-V4MRZL3F6K` in **`index.html`** (script URL) and **`src/main.ts`** (`gtag('config', …)`).
+## Design system
+
+The UI follows a warm, distraction-free design philosophy:
+
+- **Warm neutral tones** — no cold blue-grays
+- **Serif headlines** (Georgia) with 500-600 weight — body uses system sans-serif
+- **Border radius ≥ 6px** for all interactive elements
+- **No gradient backgrounds**, no pure black/white, no decorative animations
+- **CSS custom properties** for seamless light/dark theme switching
+
+See `~/design.md` for the complete design token reference.
 
 ## License
 
