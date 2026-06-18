@@ -1,6 +1,13 @@
 import { getBedtimes, getWakeTimes, formatSleepTime, getHourOptions } from './sleep';
 import { t } from './i18n';
-import { getView, setView, subscribe, toggleTheme, switchLanguage, getCurrentLanguage } from './state';
+import {
+  getView,
+  setView,
+  subscribe,
+  toggleTheme,
+  switchLanguage,
+  getCurrentLanguage,
+} from './state';
 import type { Language, SleepTime } from './types';
 
 let isAnimating = false;
@@ -95,16 +102,16 @@ function updateViewVisibility(): void {
 
   isAnimating = true;
 
-  const [outgoing, incoming] = view === 'input'
-    ? [resultView, inputView]
-    : [inputView, resultView];
+  const [outgoing, incoming] = view === 'input' ? [resultView, inputView] : [inputView, resultView];
 
   outgoing.classList.remove('view-visible');
   outgoing.classList.add('view-hidden');
   incoming.classList.remove('view-hidden');
   incoming.classList.add('view-visible');
 
-  setTimeout(() => { isAnimating = false; }, 250);
+  setTimeout(() => {
+    isAnimating = false;
+  }, 250);
 }
 
 function updateLangMenuState(): void {

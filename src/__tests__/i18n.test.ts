@@ -7,19 +7,37 @@ const localStorageMock = (() => {
   let store: Record<string, string> = {};
   return {
     getItem: (key: string) => store[key] ?? null,
-    setItem: (key: string, value: string) => { store[key] = value; },
-    removeItem: (key: string) => { delete store[key]; },
-    clear: () => { store = {}; },
+    setItem: (key: string, value: string) => {
+      store[key] = value;
+    },
+    removeItem: (key: string) => {
+      delete store[key];
+    },
+    clear: () => {
+      store = {};
+    },
   };
 })();
 
 Object.defineProperty(globalThis, 'localStorage', { value: localStorageMock });
 
 const ALL_KEYS: TranslationKey[] = [
-  'pageTitle', 'metaDescription', 'title', 'subtitle',
-  'whenToWake', 'calculateBtn', 'goingToBedNow', 'backBtn',
-  'suggestedBedtimes', 'suggestedWakeTimes', 'cycles',
-  'scienceLabel', 'scienceText', 'or', 'footer', 'langLabel',
+  'pageTitle',
+  'metaDescription',
+  'title',
+  'subtitle',
+  'whenToWake',
+  'calculateBtn',
+  'goingToBedNow',
+  'backBtn',
+  'suggestedBedtimes',
+  'suggestedWakeTimes',
+  'cycles',
+  'scienceLabel',
+  'scienceText',
+  'or',
+  'footer',
+  'langLabel',
 ];
 
 describe('SUPPORTED_LANGUAGES', () => {

@@ -41,7 +41,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     suggestedWakeTimes: 'Suggested Wake Times',
     cycles: 'cycles',
     scienceLabel: 'Science',
-    scienceText: 'Each sleep cycle lasts about 90 minutes. Waking at the end of a cycle helps you feel more refreshed. Most adults need 5-6 cycles (7.5-9 hours).',
+    scienceText:
+      'Each sleep cycle lasts about 90 minutes. Waking at the end of a cycle helps you feel more refreshed. Most adults need 5-6 cycles (7.5-9 hours).',
     or: 'or',
     footer: 'NoPress',
     langLabel: 'EN',
@@ -59,7 +60,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     suggestedWakeTimes: '建议起床时间',
     cycles: '个周期',
     scienceLabel: '科学依据',
-    scienceText: '每个睡眠周期约90分钟。在周期结束时醒来感觉更清醒。大多数成年人需要5-6个周期（7.5-9小时）。',
+    scienceText:
+      '每个睡眠周期约90分钟。在周期结束时醒来感觉更清醒。大多数成年人需要5-6个周期（7.5-9小时）。',
     or: '或',
     footer: 'NoPress',
     langLabel: '简体',
@@ -77,7 +79,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     suggestedWakeTimes: '建議起床時間',
     cycles: '個週期',
     scienceLabel: '科學依據',
-    scienceText: '每個睡眠週期約90分鐘。在週期結束時醒來感覺更清醒。大多數成年人需要5-6個週期（7.5-9小時）。',
+    scienceText:
+      '每個睡眠週期約90分鐘。在週期結束時醒來感覺更清醒。大多數成年人需要5-6個週期（7.5-9小時）。',
     or: '或',
     footer: 'NoPress',
     langLabel: '繁體',
@@ -95,7 +98,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     suggestedWakeTimes: 'おすすめの起床時間',
     cycles: 'サイクル',
     scienceLabel: '科学的根拠',
-    scienceText: '睡眠サイクルは約90分です。サイクルの終わりに目覚めるとよりすっきりします。成人の大半は5-6サイクル（7.5-9時間）が必要です。',
+    scienceText:
+      '睡眠サイクルは約90分です。サイクルの終わりに目覚めるとよりすっきりします。成人の大半は5-6サイクル（7.5-9時間）が必要です。',
     or: 'または',
     footer: 'NoPress',
     langLabel: '日本語',
@@ -113,14 +117,16 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     suggestedWakeTimes: '추천 기상 시간',
     cycles: '사이클',
     scienceLabel: '과학적 근거',
-    scienceText: '수면 사이클은 약 90분입니다. 사이클이 끝날 때 깨면 더 상쾌합니다. 대부분의 성인은 5-6 사이클(7.5-9시간)이 필요합니다.',
+    scienceText:
+      '수면 사이클은 약 90분입니다. 사이클이 끝날 때 깨면 더 상쾌합니다. 대부분의 성인은 5-6 사이클(7.5-9시간)이 필요합니다.',
     or: '또는',
     footer: 'NoPress',
     langLabel: '한국어',
   },
   es: {
     pageTitle: 'Calculadora de Sueño - Encuentra tus Ciclos de Sueño Óptimos',
-    metaDescription: 'Calcula los mejores horarios para dormir y despertar basados en ciclos de sueño de 90 minutos.',
+    metaDescription:
+      'Calcula los mejores horarios para dormir y despertar basados en ciclos de sueño de 90 minutos.',
     title: 'Calculadora de Sueño',
     subtitle: 'Despierta renovado alineándote con tus ciclos naturales de sueño',
     whenToWake: '¿A qué hora quieres despertar?',
@@ -131,7 +137,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     suggestedWakeTimes: 'Horarios sugeridos para despertar',
     cycles: 'ciclos',
     scienceLabel: 'Ciencia',
-    scienceText: 'Cada ciclo de sueño dura unos 90 minutos. Despertar al final de un ciclo te ayuda a sentirte más renovado. La mayoría de adultos necesitan 5-6 ciclos (7.5-9 horas).',
+    scienceText:
+      'Cada ciclo de sueño dura unos 90 minutos. Despertar al final de un ciclo te ayuda a sentirte más renovado. La mayoría de adultos necesitan 5-6 ciclos (7.5-9 horas).',
     or: 'o',
     footer: 'NoPress',
     langLabel: 'ES',

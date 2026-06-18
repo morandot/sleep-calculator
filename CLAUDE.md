@@ -100,8 +100,10 @@ npm run dev        # Dev server (Vite)
 npm run build      # Type check + production build
 npm run preview    # Preview production build
 npm test           # Run tests (Vitest)
-npm run lint       # ESLint check
+npm run lint       # ESLint check (flat config, eslint.config.js)
+npm run lint:fix   # ESLint auto-fix
 npm run format     # Prettier format
+npm run format:check # Prettier check (no write)
 ```
 
 ## Compact Instructions
