@@ -43,6 +43,7 @@ const {
   getView, setView, subscribe,
   getTheme, setTheme, toggleTheme, applyTheme,
   switchLanguage, getCurrentLanguage,
+  getTimeFormat, setTimeFormat, toggleTimeFormat,
 } = await import('../state');
 
 describe('view state', () => {
@@ -163,5 +164,36 @@ describe('language state', () => {
     subscribe(spy);
     switchLanguage('en');
     expect(spy).toHaveBeenCalled();
+  });
+});
+
+describe('time format', () => {
+  beforeEach(() => {
+    localStorageMock.removeItem('preferred-time-format');
+  });
+
+  it('getTimeFormat returns "12h" by default when locale is not 24h', () => {
+    expect(getTimeFormat()).toBe('12h');
+  });
+
+  it('setTimeFormat persists to localStorage', () => {
+    setTimeFormat('24h');
+    expect(localStorageMock.getItem('preferred-time-format')).toBe('24h');
+    expect(getTimeFormat()).toBe('24h');
+  });
+
+  it('toggleTimeFormat flips between 12h and 24h', () => {
+    setTimeFormat('12h');
+    toggleTimeFormat();
+    expect(getTimeFormat()).toBe('24h');
+    toggleTimeFormat();
+    expect(getTimeFormat()).toBe('12h');
+  });
+
+  it('setTimeFormat notifies subscribers', () => {
+    const callback = vi.fn();
+    subscribe(callback);
+    setTimeFormat('24h');
+    expect(callback).toHaveBeenCalled();
   });
 });

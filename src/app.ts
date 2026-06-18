@@ -7,6 +7,8 @@ import {
   toggleTheme,
   switchLanguage,
   getCurrentLanguage,
+  getTimeFormat,
+  toggleTimeFormat,
 } from './state';
 import type { Language, SleepTime } from './types';
 
@@ -63,6 +65,14 @@ function bindEvents(): void {
     toggleTheme();
   });
 
+  // Time format toggle
+  on('time-format-toggle', 'click', () => {
+    toggleTimeFormat();
+    if (getView() === 'result') {
+      renderResultsForCurrentMode();
+    }
+  });
+
   // Language buttons
   document.querySelectorAll<HTMLElement>('[data-lang]').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -92,6 +102,7 @@ function render(): void {
   updateViewVisibility();
   updateLangMenuState();
   updateThemeToggleIcon();
+  updateTimeFormatToggle();
 }
 
 function updateViewVisibility(): void {
@@ -136,6 +147,14 @@ function updateThemeToggleIcon(): void {
   moon.classList.toggle('hidden', !isDark);
 }
 
+function updateTimeFormatToggle(): void {
+  const btn = document.getElementById('time-format-toggle');
+  if (!btn) return;
+  const format = getTimeFormat();
+  btn.textContent = format === '12h' ? t('timeFormat') : t('timeFormat12h');
+  btn.setAttribute('aria-label', format === '12h' ? 'Switch to 24-hour format' : 'Switch to 12-hour format');
+}
+
 function renderResults(times: SleepTime[], isWakeTime: boolean): void {
   const resultTitle = document.getElementById('resultTitle');
   const resultList = document.getElementById('resultList');
@@ -156,7 +175,7 @@ function renderResults(times: SleepTime[], isWakeTime: boolean): void {
       const timeDiv = document.createElement('div');
       timeDiv.className = 'result-time text-2xl font-semibold tabular-nums';
       timeDiv.style.color = 'var(--color-fg)';
-      timeDiv.textContent = formatSleepTime(st);
+      timeDiv.textContent = formatSleepTime(st, getTimeFormat());
 
       const cycleDiv = document.createElement('div');
       cycleDiv.className = 'text-xs font-medium uppercase tracking-wider mt-1';

@@ -1,4 +1,4 @@
-import type { SleepTime } from './types';
+import type { SleepTime, TimeFormat } from './types';
 
 export const CYCLE_MINUTES = 90;
 export const FALL_ASLEEP_MINUTES = 15;
@@ -54,8 +54,13 @@ export function getWakeTimes(now: Date): SleepTime[] {
   return results;
 }
 
-export const formatSleepTime = (st: SleepTime): string =>
-  `${st.hour}:${pad(st.minute)} ${st.period}`;
+export const formatSleepTime = (st: SleepTime, format: TimeFormat = '12h'): string => {
+  if (format === '24h') {
+    const h24 = to24Hour(st.hour, st.period);
+    return `${pad(h24)}:${pad(st.minute)}`;
+  }
+  return `${st.hour}:${pad(st.minute)} ${st.period}`;
+};
 
 /**
  * Generate hour options for 12-hour format (1-12).

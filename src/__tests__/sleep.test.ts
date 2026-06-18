@@ -214,6 +214,32 @@ describe('formatSleepTime', () => {
   });
 });
 
+describe('formatSleepTime with 24h format', () => {
+  it('formats 12:00 AM as 00:00 in 24h', () => {
+    expect(formatSleepTime({ hour: 12, minute: 0, period: 'AM', cycles: 5 }, '24h')).toBe('00:00');
+  });
+
+  it('formats 12:00 PM as 12:00 in 24h', () => {
+    expect(formatSleepTime({ hour: 12, minute: 0, period: 'PM', cycles: 5 }, '24h')).toBe('12:00');
+  });
+
+  it('formats 1:30 PM as 13:30 in 24h', () => {
+    expect(formatSleepTime({ hour: 1, minute: 30, period: 'PM', cycles: 4 }, '24h')).toBe('13:30');
+  });
+
+  it('formats 11:45 PM as 23:45 in 24h', () => {
+    expect(formatSleepTime({ hour: 11, minute: 45, period: 'PM', cycles: 6 }, '24h')).toBe('23:45');
+  });
+
+  it('formats 7:05 AM as 07:05 in 24h', () => {
+    expect(formatSleepTime({ hour: 7, minute: 5, period: 'AM', cycles: 5 }, '24h')).toBe('07:05');
+  });
+
+  it('defaults to 12h when format not specified', () => {
+    expect(formatSleepTime({ hour: 7, minute: 0, period: 'AM', cycles: 5 })).toBe('7:00 AM');
+  });
+});
+
 describe('constants', () => {
   it('CYCLE_MINUTES is 90', () => {
     expect(CYCLE_MINUTES).toBe(90);

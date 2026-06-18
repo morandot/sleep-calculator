@@ -16,7 +16,9 @@ export type TranslationKey =
   | 'scienceText'
   | 'or'
   | 'footer'
-  | 'langLabel';
+  | 'langLabel'
+  | 'timeFormat'
+  | 'timeFormat12h';
 
 export const SUPPORTED_LANGUAGES: { code: Language; label: string }[] = [
   { code: 'en', label: 'English' },
@@ -46,6 +48,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     or: 'or',
     footer: 'NoPress',
     langLabel: 'EN',
+    timeFormat: '24h',
+    timeFormat12h: '12h',
   },
   zh: {
     pageTitle: '睡眠周期计算器 - 科学规划入睡与起床时间',
@@ -65,6 +69,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     or: '或',
     footer: 'NoPress',
     langLabel: '简体',
+    timeFormat: '24小时',
+    timeFormat12h: '12小时',
   },
   'zh-TW': {
     pageTitle: '睡眠週期計算器 - 科學規劃入睡與起床時間',
@@ -84,6 +90,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     or: '或',
     footer: 'NoPress',
     langLabel: '繁體',
+    timeFormat: '24小時',
+    timeFormat12h: '12小時',
   },
   ja: {
     pageTitle: '睡眠サイクル計算機 - 最適な睡眠時間を科学的に計算',
@@ -103,6 +111,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     or: 'または',
     footer: 'NoPress',
     langLabel: '日本語',
+    timeFormat: '24時間',
+    timeFormat12h: '12時間',
   },
   ko: {
     pageTitle: '수면 사이클 계산기 - 최적의 수면 시간을 과학적으로 계산',
@@ -122,6 +132,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     or: '또는',
     footer: 'NoPress',
     langLabel: '한국어',
+    timeFormat: '24시간',
+    timeFormat12h: '12시간',
   },
   es: {
     pageTitle: 'Calculadora de Sueño - Encuentra tus Ciclos de Sueño Óptimos',
@@ -142,6 +154,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     or: 'o',
     footer: 'NoPress',
     langLabel: 'ES',
+    timeFormat: '24h',
+    timeFormat12h: '12h',
   },
 };
 
