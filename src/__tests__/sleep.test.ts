@@ -116,6 +116,31 @@ describe('getBedtimes', () => {
   });
 });
 
+describe('getBedtimes determinism', () => {
+  it('produces the same results regardless of system clock', () => {
+    const fixedNow = new Date(2024, 0, 15, 10, 0); // Jan 15, 2024, 10:00 AM
+    const results1 = getBedtimes(7, 0, 'AM', fixedNow);
+    const results2 = getBedtimes(7, 0, 'AM', fixedNow);
+    expect(results1).toEqual(results2);
+  });
+
+  it('uses current date when now is not provided', () => {
+    const results = getBedtimes(7, 0, 'AM');
+    expect(results).toHaveLength(4);
+    expect(results[0].cycles).toBe(6);
+  });
+
+  it('produces correct results for a known fixed date', () => {
+    const fixedNow = new Date(2024, 0, 15, 10, 0); // Jan 15, 2024, 10:00 AM
+    const results = getBedtimes(7, 0, 'AM', fixedNow);
+    const six = results[0];
+    // 6 * 90 + 15 = 555 min before 7:00 AM = 9:45 PM
+    expect(six.hour).toBe(9);
+    expect(six.minute).toBe(45);
+    expect(six.period).toBe('PM');
+  });
+});
+
 describe('getWakeTimes', () => {
   it('returns 4 results (3-6 cycles)', () => {
     const now = new Date(2024, 0, 1, 23, 0); // 11:00 PM

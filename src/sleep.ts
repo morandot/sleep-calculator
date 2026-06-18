@@ -23,9 +23,10 @@ export function getBedtimes(
   wakeHour: number,
   wakeMinute: number,
   wakePeriod: 'AM' | 'PM',
+  now?: Date,
 ): SleepTime[] {
   const h24 = to24Hour(wakeHour, wakePeriod);
-  const wakeDate = new Date();
+  const wakeDate = now ? new Date(now) : new Date();
   wakeDate.setHours(h24, wakeMinute, 0, 0);
 
   const results: SleepTime[] = [];
