@@ -10,7 +10,7 @@ import {
 } from './state';
 import type { Language, SleepTime } from './types';
 
-let isAnimating = false;
+let animationTimer: ReturnType<typeof setTimeout> | null = null;
 let lastRenderedMode: 'wake' | 'bed' = 'wake';
 
 /**
@@ -98,9 +98,13 @@ function updateViewVisibility(): void {
   const view = getView();
   const inputView = document.getElementById('input-view');
   const resultView = document.getElementById('result-view');
-  if (!inputView || !resultView || isAnimating) return;
+  if (!inputView || !resultView) return;
 
-  isAnimating = true;
+  // Cancel any pending transition
+  if (animationTimer !== null) {
+    clearTimeout(animationTimer);
+    animationTimer = null;
+  }
 
   const [outgoing, incoming] = view === 'input' ? [resultView, inputView] : [inputView, resultView];
 
@@ -109,8 +113,8 @@ function updateViewVisibility(): void {
   incoming.classList.remove('view-hidden');
   incoming.classList.add('view-visible');
 
-  setTimeout(() => {
-    isAnimating = false;
+  animationTimer = setTimeout(() => {
+    animationTimer = null;
   }, 250);
 }
 
@@ -143,22 +147,26 @@ function renderResults(times: SleepTime[], isWakeTime: boolean): void {
   const borderColor = isWakeTime ? 'border-l-emerald-500' : 'border-l-violet-500';
   const cycleText = t('cycles');
 
-  resultList.innerHTML = times
-    .map(
-      (st, i) => `
-      <div class="result-bubble border-l-4 ${borderColor} stagger-item"
-           style="animation-delay: ${i * 70}ms">
-        <div class="result-time text-2xl font-semibold tabular-nums"
-             style="color: var(--color-fg)">
-          ${formatSleepTime(st)}
-        </div>
-        <div class="text-xs font-medium uppercase tracking-wider mt-1"
-             style="color: var(--color-fg-muted)">
-          ${st.cycles} ${cycleText}
-        </div>
-      </div>`,
-    )
-    .join('');
+  resultList.replaceChildren(
+    ...times.map((st, i) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = `result-bubble border-l-4 ${borderColor} stagger-item`;
+      wrapper.style.animationDelay = `${i * 70}ms`;
+
+      const timeDiv = document.createElement('div');
+      timeDiv.className = 'result-time text-2xl font-semibold tabular-nums';
+      timeDiv.style.color = 'var(--color-fg)';
+      timeDiv.textContent = formatSleepTime(st);
+
+      const cycleDiv = document.createElement('div');
+      cycleDiv.className = 'text-xs font-medium uppercase tracking-wider mt-1';
+      cycleDiv.style.color = 'var(--color-fg-muted)';
+      cycleDiv.textContent = `${st.cycles} ${cycleText}`;
+
+      wrapper.append(timeDiv, cycleDiv);
+      return wrapper;
+    }),
+  );
 
   resultList.scrollTop = 0;
 }

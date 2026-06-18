@@ -13,7 +13,7 @@ and wake times based on ~90-minute sleep cycles. PWA-ready, i18n (EN/ZH).
 |--------|---------------|
 | `src/sleep.ts` | Pure functions for sleep cycle math. No side effects. |
 | `src/i18n.ts` | Translation strings, language detection, DOM string updates. |
-| `src/ui.ts` | UI orchestration: view switching, result rendering, event binding. |
+| `src/app.ts` | UI orchestration: view switching, result rendering, event binding. |
 | `src/main.ts` | Entry point: bootstrap i18n, init UI, analytics. |
 | `src/style.css` | Tailwind directives + theme CSS variables + custom animations. |
 
