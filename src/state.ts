@@ -7,12 +7,19 @@ type Listener = () => void;
 const listeners: Set<Listener> = new Set();
 
 let currentView: ViewMode = 'input';
-let currentTheme: Theme = getInitialTheme();
+let currentTheme: Theme | null = null;
 
 function getInitialTheme(): Theme {
   const stored = localStorage.getItem('preferred-theme');
   if (stored === 'light' || stored === 'dark') return stored;
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function ensureTheme(): Theme {
+  if (currentTheme === null) {
+    currentTheme = getInitialTheme();
+  }
+  return currentTheme;
 }
 
 function notify(): void {
@@ -35,7 +42,7 @@ export function setView(view: ViewMode): void {
 }
 
 export function getTheme(): Theme {
-  return currentTheme;
+  return ensureTheme();
 }
 
 export function setTheme(theme: Theme): void {
@@ -46,7 +53,7 @@ export function setTheme(theme: Theme): void {
 }
 
 export function toggleTheme(): void {
-  setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  setTheme(ensureTheme() === 'dark' ? 'light' : 'dark');
 }
 
 export function applyTheme(theme: Theme): void {
@@ -67,5 +74,5 @@ export function getCurrentLanguage(): Language {
  * Initialize theme on page load (call before DOM visible).
  */
 export function initTheme(): void {
-  applyTheme(currentTheme);
+  applyTheme(ensureTheme());
 }
