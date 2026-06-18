@@ -152,7 +152,10 @@ function updateTimeFormatToggle(): void {
   if (!btn) return;
   const format = getTimeFormat();
   btn.textContent = format === '12h' ? t('timeFormat') : t('timeFormat12h');
-  btn.setAttribute('aria-label', format === '12h' ? 'Switch to 24-hour format' : 'Switch to 12-hour format');
+  btn.setAttribute(
+    'aria-label',
+    format === '12h' ? 'Switch to 24-hour format' : 'Switch to 12-hour format',
+  );
 }
 
 function renderResults(times: SleepTime[], isWakeTime: boolean): void {

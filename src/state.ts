@@ -21,8 +21,8 @@ function getInitialTimeFormat(): TimeFormat {
   if (stored === '12h' || stored === '24h') return stored;
   // Auto-detect from locale
   try {
-    const hourCycle = new Intl.DateTimeFormat(undefined, { hour: 'numeric' })
-      .resolvedOptions().hourCycle;
+    const hourCycle = new Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions()
+      .hourCycle;
     if (hourCycle === 'h23' || hourCycle === 'h24') return '24h';
   } catch {
     // Intl not available — fall back to 12h

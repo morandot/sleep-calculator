@@ -7,9 +7,15 @@ const localStorageMock = (() => {
   let store: Record<string, string> = {};
   return {
     getItem: (key: string) => store[key] ?? null,
-    setItem: (key: string, value: string) => { store[key] = value; },
-    removeItem: (key: string) => { delete store[key]; },
-    clear: () => { store = {}; },
+    setItem: (key: string, value: string) => {
+      store[key] = value;
+    },
+    removeItem: (key: string) => {
+      delete store[key];
+    },
+    clear: () => {
+      store = {};
+    },
   };
 })();
 Object.defineProperty(globalThis, 'localStorage', { value: localStorageMock });
@@ -40,10 +46,18 @@ Object.defineProperty(document.documentElement, 'classList', { value: classListM
 
 // NOW import state.ts — safe because getInitialTheme is lazy
 const {
-  getView, setView, subscribe,
-  getTheme, setTheme, toggleTheme, applyTheme,
-  switchLanguage, getCurrentLanguage,
-  getTimeFormat, setTimeFormat, toggleTimeFormat,
+  getView,
+  setView,
+  subscribe,
+  getTheme,
+  setTheme,
+  toggleTheme,
+  applyTheme,
+  switchLanguage,
+  getCurrentLanguage,
+  getTimeFormat,
+  setTimeFormat,
+  toggleTimeFormat,
 } = await import('../state');
 
 describe('view state', () => {
