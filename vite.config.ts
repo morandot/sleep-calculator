@@ -1,15 +1,10 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
-  test: {
-    include: ['src/**/*.test.ts'],
-  },
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      injectRegister: 'auto',
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png}'],
         runtimeCaching: [
