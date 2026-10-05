@@ -1,0 +1,10 @@
+# robots.txt for sleep.nopress.net
+# Generated for search-engine discovery (Bing / Google / IndexNow).
+
+User-agent: *
+Allow: /
+
+# The app is a single-page tool; no paths need to be blocked.
+# /offline.html is a PWA fallback and is intentionally excluded from the sitemap.
+
+Sitemap: https://sleep.nopress.net/sitemap.xml
