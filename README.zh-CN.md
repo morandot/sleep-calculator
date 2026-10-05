@@ -109,6 +109,27 @@ sleep-calculator/
 
 完整的设计 Token 参考请查看 `docs/geist-design.md`。
 
+## 搜索引擎配置
+
+`https://sleep.nopress.net` 已在 Bing Webmaster Tools 注册并完成验证，因此 `index.html`
+中没有 `msvalidate.01` 标签。若需要重新验证（例如换 Bing 账号），把 Bing 提供的标签
+加进 `index.html` 的 `<head>`。
+
+| 文件 | 作用 |
+| --- | --- |
+| `public/robots.txt` | 允许所有爬虫，并指向 sitemap |
+| `public/sitemap.xml` | 每次构建重新生成，`<lastmod>` 始终跟随构建日期 |
+| `public/<key>.txt` | IndexNow 密钥文件；文件本身就是凭据，必须留在站点根目录 |
+| `.github/workflows/indexnow.yml` | 生产部署成功后自动向 IndexNow 提交 URL |
+
+```bash
+npm run sitemap    # 重新生成 public/sitemap.xml
+npm run indexnow   # 向 IndexNow 提交 URL（加 -- --dry-run 可预览）
+```
+
+`sitemap.xml` 与 `robots.txt` 只是发现信号，并不保证收录；实际收录情况请在
+Bing Webmaster Tools 中确认。
+
 ## 许可证
 
 [MIT 许可证](https://opensource.org/licenses/MIT)。

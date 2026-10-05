@@ -112,6 +112,28 @@ The UI follows a warm, distraction-free design philosophy:
 
 See `docs/geist-design.md` for the complete design token reference.
 
+## Search engine setup
+
+The property `https://sleep.nopress.net` is registered and verified in Bing Webmaster
+Tools, so no `msvalidate.01` meta tag is present in `index.html`. If you ever need to
+re-verify (for example under a new Bing account), add the tag Bing gives you to the
+`<head>` of `index.html`.
+
+| File | Purpose |
+| --- | --- |
+| `public/robots.txt` | Allows all crawlers and points to the sitemap |
+| `public/sitemap.xml` | Regenerated on every build, so `<lastmod>` always tracks the build date |
+| `public/<key>.txt` | IndexNow key file; the file *is* the credential, so it must stay at the site root |
+| `.github/workflows/indexnow.yml` | Submits URLs to IndexNow after a successful production deploy |
+
+```bash
+npm run sitemap    # regenerate public/sitemap.xml
+npm run indexnow   # submit URLs to IndexNow (add -- --dry-run to preview)
+```
+
+`sitemap.xml` and `robots.txt` are discovery signals, not guarantees of indexing;
+confirm actual coverage in Bing Webmaster Tools.
+
 ## License
 
 [MIT License](https://opensource.org/licenses/MIT).

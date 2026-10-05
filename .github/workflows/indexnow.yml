@@ -1,0 +1,29 @@
+name: Notify search engines on deploy
+
+on:
+  deployment_status:
+
+jobs:
+  indexnow:
+    # Only run when a production deployment succeeds.
+    if: github.event.deployment_status.state == 'success' && github.event.deployment_status.environment == 'Production'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Regenerate the sitemap so lastmod reflects this build, then wait for
+      # the live site to actually serve it before notifying search engines.
+      - name: Regenerate sitemap
+        run: npm run sitemap
+
+      - name: Wait for live deployment
+        run: node scripts/wait-deploy.mjs
+        env:
+          DEPLOY_TIMEOUT: "600"
+
+      - name: Submit URLs via IndexNow
+        run: npm run indexnow
