@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 ## Project Overview
 
@@ -65,7 +65,8 @@ Before implementing any feature or phase, strictly follow:
 
 ## Design System
 
-Reference `~/design.md` for all UI decisions. Key rules:
+Reference `docs/geist-design.md` (archived Geist reference, dark theme in
+`docs/geist-design.dark.md`) for all UI decisions. Key rules:
 
 - **Warm tones** — no cold blue-grays
 - **Font weights 500-600** for headings — never 700+
@@ -79,7 +80,7 @@ Reference `~/design.md` for all UI decisions. Key rules:
 
 ### Tailwind Customization
 
-When extending `tailwind.config.js`, add tokens from `~/design.md` — do not invent new values.
+When extending `tailwind.config.js`, add tokens from `docs/geist-design.md` — do not invent new values.
 
 ## Dependencies
 

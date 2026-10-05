@@ -110,7 +110,7 @@ The UI follows a warm, distraction-free design philosophy:
 - **No gradient backgrounds**, no pure black/white, no decorative animations
 - **CSS custom properties** for seamless light/dark theme switching
 
-See `~/design.md` for the complete design token reference.
+See `docs/geist-design.md` for the complete design token reference.
 
 ## License
 

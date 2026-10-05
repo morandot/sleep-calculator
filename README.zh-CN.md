@@ -107,7 +107,7 @@ sleep-calculator/
 - **无渐变背景**，无纯黑/纯白，无装饰性动画
 - **CSS 自定义属性** 实现无缝明暗主题切换
 
-完整的 设计 Token 参考请查看 `~/design.md`。
+完整的设计 Token 参考请查看 `docs/geist-design.md`。
 
 ## 许可证
 

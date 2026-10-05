@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Neutral (warm tones from design.md)
+        // Neutral (warm tones, from archived design/geist reference)
         bg: {
           DEFAULT: '#FDFDFD',
           subtle: '#F5F4ED',
@@ -29,7 +29,7 @@ export default {
           dark: '#3D3D3A',
           'dark-strong': '#4A4A48',
         },
-        // Primary (from design.md)
+        // Primary (from archived design/geist reference)
         primary: {
           DEFAULT: '#6C5CE7',
           dark: '#8B7FF0',
